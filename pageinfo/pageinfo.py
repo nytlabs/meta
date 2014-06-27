@@ -26,6 +26,7 @@ def get_meta(url):
     
     data = {}
     data["title"] = ""
+    data["canonical"] = None
     data["description"] = None
     data["favicon"] = None
     data["facebook"] = {}
