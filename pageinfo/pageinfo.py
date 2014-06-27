@@ -26,6 +26,7 @@ def get_meta(url):
     
     data = {}
     data["title"] = ""
+    data["canonical"] = None
     data["description"] = None
     data["favicon"] = None
     data["facebook"] = {}
@@ -43,8 +44,6 @@ def get_meta(url):
             canonical = soup.find("link", rel="canonical")
             if canonical:
                 data["canonical"] = canonical['href']
-            else:
-                data["canonical"] = None
             #get favicon
             parsed_uri = urlparse( url )
             if soup.find("link", rel="shortcut icon"):
@@ -66,8 +65,6 @@ def get_meta(url):
                     data["facebook"][tag_type] = tag['content']
                     if tag_type == "og:description" and data["description"] is None:
                         data["description"] = tag["content"]
-            else:
-                data["facebook"] = {}
 
             #get twitter card data
             if soup.findAll('meta', attrs={'name':re.compile("^twitter")}):
