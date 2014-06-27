@@ -43,6 +43,8 @@ def get_meta(url):
             canonical = soup.find("link", rel="canonical")
             if canonical:
                 data["canonical"] = canonical['href']
+            else:
+                data["canonical"] = None
             #get favicon
             parsed_uri = urlparse( url )
             if soup.find("link", rel="shortcut icon"):
@@ -75,7 +77,7 @@ def get_meta(url):
                             data["description"] = tag["content"]
             # make sure canonical exists, use og as backup
             if not data['canonical'] or len(data['canonical']) == 0:
-                if data['facebook'].has_key('og:url'):
+                if data.get('facebook') and data['facebook'].has_key('og:url'):
                     data['canonical'] = data['facebook']['og:url']
             if not data['canonical'] or len(data['canonical']) == 0:
                 data['canonical'] = url
