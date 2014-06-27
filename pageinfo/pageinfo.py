@@ -66,6 +66,8 @@ def get_meta(url):
                     data["facebook"][tag_type] = tag['content']
                     if tag_type == "og:description" and data["description"] is None:
                         data["description"] = tag["content"]
+            else:
+                data["facebook"] = {}
 
             #get twitter card data
             if soup.findAll('meta', attrs={'name':re.compile("^twitter")}):
@@ -77,7 +79,7 @@ def get_meta(url):
                             data["description"] = tag["content"]
             # make sure canonical exists, use og as backup
             if not data['canonical'] or len(data['canonical']) == 0:
-                if data.get('facebook') and data['facebook'].has_key('og:url'):
+                if data['facebook'].has_key('og:url'):
                     data['canonical'] = data['facebook']['og:url']
             if not data['canonical'] or len(data['canonical']) == 0:
                 data['canonical'] = url
